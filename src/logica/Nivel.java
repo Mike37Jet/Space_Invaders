@@ -1,6 +1,7 @@
 package logica;
 
 import Recursos.Constantes;
+import presentacion.DetectorTeclas;
 
 import java.io.Serializable;
 
@@ -19,13 +20,13 @@ public class Nivel implements Serializable {
         for (int columna = 0; columna < 4; columna++) {
             this.arregloEscudos[columna] = new Escudo(Constantes.margenVentana + Constantes.posicionXPrimerEscudo + columna * (Constantes.anchoEscudo + Constantes.espacioDeSeparacionEntreEscudos));
         }
-        naveEspacial = new NaveEspacial();
-        naveNodriza = new NaveNodriza();
         proyectil = new Proyectil();
+        naveEspacial = new NaveEspacial(proyectil);
+        naveNodriza = new NaveNodriza();
         proyectilAlien = new ProyectilAlien(this.colmenaDeAliens, arregloEscudos, naveEspacial);
     }
 
-    public void iniciarNivel() {
+    public void iniciarNivel(DetectorTeclas controles) {
 
         naveEspacial.hilo = true;
         naveNodriza.hilo = true;
@@ -40,7 +41,9 @@ public class Nivel implements Serializable {
         hiloLogicoNaveNodriza = new Thread(naveNodriza);
         hiloLogicoProyectilAlien = new Thread(proyectilAlien);
 
+
         naveEspacial.setNivel(this);
+        naveEspacial.setDetectorTeclas(controles);
         naveNodriza.setNivel(this);
         proyectil.setNivel(this);
         proyectilAlien.setNivel(this);

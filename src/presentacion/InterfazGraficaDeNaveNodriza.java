@@ -21,4 +21,6 @@ public class InterfazGraficaDeNaveNodriza extends InterfazGrafica {
     public void run() {
 
     }
+
+
 }

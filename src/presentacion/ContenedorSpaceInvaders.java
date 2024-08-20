@@ -20,10 +20,15 @@ public class ContenedorSpaceInvaders extends JPanel {
     private InterfazGraficaDeEscudo[] interfazGraficaEscudos = new InterfazGraficaDeEscudo[4];
     private Nivel nivel;
     public int score = 0;
+    private final DetectorTeclas controles;
     private Font fuentePuntuacion = new Font("Arial", Font.PLAIN, 20);
     private Font fuenteTexto = new Font("Arial", Font.PLAIN, 40);
 
     public ContenedorSpaceInvaders() {
+        setFocusable(true);
+        requestFocusInWindow();
+        controles = new DetectorTeclas();
+        addKeyListener(controles);
         interfazGraficaNaveEspacial = new InterfazGraficaDeNaveEspacial(this);
         interfazGraficaNaveNodriza = new InterfazGraficaDeNaveNodriza();
 
@@ -64,7 +69,7 @@ public class ContenedorSpaceInvaders extends JPanel {
             interfazGraficaEscudos[columna].setEntidad(nivel.getEscudo(columna));
             interfazGraficaEscudos[columna].setEscudos(nivel.getArregloEscudos());
         }
-        nivel.iniciarNivel();
+        nivel.iniciarNivel(controles);
 
     }
 

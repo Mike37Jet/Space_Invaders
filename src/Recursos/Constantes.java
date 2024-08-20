@@ -36,9 +36,9 @@ public abstract class Constantes {
 	public final static int espacioHorizontalEntreColumnasAlienigenas = 10;  // Espacio horizontal entre columnas de alienígenas
 
 	// Unidad de desplazamiento del alien
-	public final static int cambioEnXDxAlien = 2;  // Desplazamiento horizontal de los alienígenas en píxeles
-	public final static int cambioEnYDyAlien = 20;  // Desplazamiento vertical de los alienígenas en píxeles
-	public final static int velocidadAlienigenas = 3;  // Velocidad de los alienígenas
+	public final static int cambioEnXDxAlien = 1;  // Desplazamiento horizontal de los alienígenas en píxeles
+	public final static int cambioEnYDyAlien = 10;  // Desplazamiento vertical de los alienígenas en píxeles
+	public final static int velocidadAlienigenas = 2;  // Velocidad de los alienígenas
 
 	// Numero total de aliens
 	public final static int numeroTotalAliens = 50; //Numero de aliens

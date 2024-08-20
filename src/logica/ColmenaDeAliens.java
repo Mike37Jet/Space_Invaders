@@ -207,7 +207,7 @@ public class ColmenaDeAliens implements Runnable {
     }
 
 
-    public void proyectilImpactaNave(Proyectil proyectil) {
+    public void proyectilImpactaAlien(Proyectil proyectil) {
         // Recorre toda la colmena de aliens para verificar si el proyectil ha tocado alguno
         for (int columna = 0; columna < 10; columna++) {
             for (int fila = 0; fila < 5; fila++) {

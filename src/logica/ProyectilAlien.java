@@ -14,12 +14,10 @@ public class ProyectilAlien extends Entidad {
     /**** Variables ****/
 
 
-
-
     /**** CONSTRUCTEUR ****/
 
     public ProyectilAlien(ColmenaDeAliens matrizPosicionALien, Escudo[] arregloEscudos, NaveEspacial naveEspacial) {
-        super(Constantes.anchoDisparoAlien, Constantes.altoDisparoAlien, matrizPosicionALien.elegirAlienParaDisparar()[0] + Constantes.anchoAlien / 2 - 1,matrizPosicionALien.elegirAlienParaDisparar()[1] + Constantes.alturaAlien,0,Constantes.espacioDeDesplazamientoEnYDisparoAlien);
+        super(Constantes.anchoDisparoAlien, Constantes.altoDisparoAlien, matrizPosicionALien.elegirAlienParaDisparar()[0] + Constantes.anchoAlien / 2 - 1, matrizPosicionALien.elegirAlienParaDisparar()[1] + Constantes.alturaAlien, 0, Constantes.espacioDeDesplazamientoEnYDisparoAlien);
         this.matrizPosicionALien = matrizPosicionALien;
 
         this.arregloEscudos = arregloEscudos;
@@ -27,17 +25,31 @@ public class ProyectilAlien extends Entidad {
 
     }
 
+    @Override
+    public void verificarTiempo() {
+        double intervaloDeDibujo = 200000000 / Constantes.FPS; //frames por seundo
+        double nextDrawTime = System.nanoTime() + intervaloDeDibujo; //intervalo de sistema en nanosegundos
+        try {
+            double tiempoRestante = (nextDrawTime - System.nanoTime()) / 1000000;
+            if (tiempoRestante < 0) {
+                tiempoRestante = 0;
+            }
+            Thread.sleep((long) tiempoRestante);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**** METHODES ****/
 
     public void desplazarDisparoAlien() {
         // Verifica si el contador de iteraciones es m�ltiplo de 4
-       if (contadorDeIteraciones % 4 == 0) {
-           // Si la posici�n y del disparo es menor que 600(Tama�o de la pantalla), desplaza el disparo hacia abajo
-           if (this.yPos < 600) {
-               this.yPos = this.yPos + Constantes.espacioDeDesplazamientoEnYDisparoAlien;
-           }
-       }
+        if (contadorDeIteraciones % 4 == 0) {
+            // Si la posici�n y del disparo es menor que 600(Tama�o de la pantalla), desplaza el disparo hacia abajo
+            if (this.yPos < 600) {
+                this.yPos = this.yPos + Constantes.espacioDeDesplazamientoEnYDisparoAlien;
+            }
+        }
     }
 
 

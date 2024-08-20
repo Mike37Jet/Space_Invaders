@@ -1,5 +1,6 @@
 package presentacion;
 
+import Recursos.Constantes;
 import logica.Entidad;
 import logica.NaveEspacial;
 import logica.Nivel;
@@ -29,7 +30,21 @@ public class InterfazGraficaDeNaveEspacial extends InterfazGrafica{
     public void run() {
         while (true) {
             contenedorSpaceInvaders.repaint();
-            Entidad.verificarTiempo();
+            verificarTiempo();
+        }
+    }
+
+    public void verificarTiempo() {
+        double intervaloDeDibujo = 1000000000 / Constantes.FPS; //frames por seundo
+        double nextDrawTime = System.nanoTime() + intervaloDeDibujo; //intervalo de sistema en nanosegundos
+        try {
+            double tiempoRestante = (nextDrawTime - System.nanoTime()) / 1000000;
+            if (tiempoRestante < 0) {
+                tiempoRestante = 0;
+            }
+            Thread.sleep((long) tiempoRestante);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

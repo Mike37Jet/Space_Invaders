@@ -91,7 +91,7 @@ public abstract class Entidad implements Runnable, Serializable {
 
 
 
-	public static void verificarTiempo() {
+	public void verificarTiempo() {
 		double intervaloDeDibujo = 1000000000 / Constantes.FPS; //frames por seundo
 		double nextDrawTime = System.nanoTime() + intervaloDeDibujo; //intervalo de sistema en nanosegundos
 		try {
