@@ -4,17 +4,21 @@ import Recursos.Audio;
 import Recursos.Constantes;
 
 public class Proyectil extends Entidad {
-	
-/**** VARIABLES ****/	
+
+    private Escudo[] arregloEscudos;
+    private NaveNodriza naveNodriza;
+    /**** VARIABLES ****/
 	
 	private boolean estaDisparando = false;
 
 	/**** Constructor ****/
 	
-	public Proyectil() {
-		super(Constantes.anchoProyectil, Constantes.altoProyectil, 0,Constantes.yPosicionInicialNave - Constantes.altoProyectil,0,Constantes.unidadesDeDesplazamientos);
+	public Proyectil(Escudo[] arregloEscudos, NaveNodriza naveNodriza) {
+		super(Constantes.anchoProyectil, Constantes.altoProyectil, -Constantes.anchoProyectil,Constantes.yPosicionInicialNave - Constantes.altoProyectil,0,Constantes.unidadesDeDesplazamientos);
 
-	}
+        this.arregloEscudos = arregloEscudos;
+        this.naveNodriza = naveNodriza;
+    }
 	
 	/**** Metodos ****/
 	public boolean isEstaDisparando() {
@@ -31,7 +35,7 @@ public class Proyectil extends Entidad {
 		// Método que maneja el movimiento del disparo de la nave
 		if (this.estaDisparando == true) {
 			// Si la nave ha disparado
-			if (this.yPos > 0) {
+			if (this.yPos > -Constantes.altoProyectil) {
 				// Si la posición Y del disparo es mayor que 0 (no ha llegado al borde superior de la pantalla)
 				this.yPos = this.yPos - Constantes.unidadesDeDesplazamientos;
 				// Mueve el disparo hacia arriba restando unidadesDeDesplazamientos a la posición Y
@@ -135,13 +139,13 @@ public class Proyectil extends Entidad {
 			if (arregloEscudos[matrizNumEscudoYPosX[0]].encontrarFilaDondeSeEncuentraElBloque(
 					arregloEscudos[matrizNumEscudoYPosX[0]].determinarColumnaDondeImpactoMisilEnElEscudo(matrizNumEscudoYPosX[1])) != -1) {
 				arregloEscudos[matrizNumEscudoYPosX[0]].romperBloques(matrizNumEscudoYPosX[1]); // Destruye los bloques del escudo tocado
-				this.yPos = -1; // Elimina el proyectil y reactiva el cañón de la nave
+				this.yPos = -Constantes.altoProyectil; // Elimina el proyectil y reactiva el cañón de la nave
 			}
 		}
 	}
 
 	//todo: revisar el nombre de este metodo
-	public boolean proyectilImpactoNaveNodriza(NaveNodriza naveNodriza) {
+	public void proyectilImpactoNaveNodriza(NaveNodriza naveNodriza) {
 		// Verifica si el disparo ha impactado en la nave nodriza
 		if (this.yPos < naveNodriza.getyPos() + naveNodriza.getAlto() && // Parte superior del disparo es menor que la parte inferior de la nave
 				this.yPos + this.alto > naveNodriza.getyPos() && // Parte inferior del disparo es mayor que la parte superior de la nave
@@ -149,9 +153,10 @@ public class Proyectil extends Entidad {
 				this.xPos < naveNodriza.getxPos() + naveNodriza.getAncho()) { // Borde izquierdo del disparo es menor que el borde derecho de la nave
 
 			this.estaDisparando = false; // Marca el disparo como inactivo (se ha destruido)
-			return true; // Retorna verdadero para indicar que el disparo ha impactado en la nave nodriza
+			this.yPos = -Constantes.altoProyectil; // Mueve el disparo fuera de la pantalla
+			naveNodriza.estaVivo = false; // Retorna verdadero para indicar que el disparo ha impactado en la nave nodriza
 		} else {
-			return false; // Retorna falso para indicar que no ha habido impacto
+			naveNodriza.estaVivo = true; // Retorna falso para indicar que no ha habido impacto
 		}
 	}
 
@@ -159,6 +164,8 @@ public class Proyectil extends Entidad {
 	public void actualizar() {
 		if(estaDisparando){
 			desplazarProyectil();
+			proyectilDestruyeEscudo(arregloEscudos);
+			proyectilImpactoNaveNodriza(naveNodriza);
 		}
 	}
 }

@@ -15,6 +15,7 @@ public class ColmenaDeAliens implements Runnable {
     private boolean estaYendoHaciaLaDerecha;
     private boolean esPrimeraImagendelAlien;
     private int velocidad;
+    private boolean colmenaViva = true;
     private Nivel nivel;
     private int[] matrizAliensMuertos = {-1, -1}; // Emplacement alien mort dans tableau aliens
 
@@ -41,7 +42,7 @@ public class ColmenaDeAliens implements Runnable {
     private void crearColmenaDeAliens() {
         // M�todo que llena la matriz de aliens
         for (int columna = 0; columna < 10; columna++) { // Recorre cada columna de la colmena
-            for (int fila =0; fila < 1; fila++) {
+            for (int fila = 0; fila < 1; fila++) {
                 // Crear el alien en la primera fila
                 this.colmenaDeAliens[fila][columna] = new Alien(
                         Constantes.posicionInicialEnXAlienigenas + (Constantes.anchoAlien + Constantes.espacioHorizontalEntreColumnasAlienigenas) * columna,
@@ -71,9 +72,6 @@ public class ColmenaDeAliens implements Runnable {
             }
         }
     }
-
-
-
 
 
     private boolean estaTocandoBordeIzquierdo() {
@@ -218,7 +216,7 @@ public class ColmenaDeAliens implements Runnable {
                         // Marca al alien como destruido
                         this.colmenaDeAliens[fila][columna].estaVivo = false;
                         // Mueve el proyectil fuera de la pantalla (lo destruye)
-                        proyectil.yPos = -1;
+                        proyectil.yPos = -15;
                         // Registra la posici�n del alien muerto en el arreglo
                         this.matrizAliensMuertos[0] = fila;
                         this.matrizAliensMuertos[1] = columna;
@@ -236,6 +234,9 @@ public class ColmenaDeAliens implements Runnable {
         this.colmenaDeAliens[matrizAliensMuertos[0]][matrizAliensMuertos[1]] = null;
         // Disminuye el n�mero total de aliens en la colmena
         this.numeroTotalAliens--;
+        if(this.numeroTotalAliens == 0){
+            colmenaViva = false;
+        }
     }
 
 
@@ -321,16 +322,17 @@ public class ColmenaDeAliens implements Runnable {
 
     @Override
     public void run() {
-        while (colmenaDeAliens[0][0].getHilo()) {
-        desplazarAliens();
-        verificarTiempo2();
-        obtenerPosicionAlienigenaMasBajo();
+        while (colmenaViva) {
+            proyectilImpactaAlien(nivel.getProyectil());
+            desplazarAliens();
+            verificarTiempo2();
+            obtenerPosicionAlienigenaMasBajo();
         }
 
     }
 
     public static void verificarTiempo2() {
-        double intervaloDeDibujo = 1000000000 / (Constantes.FPS-50); //frames por seundo
+        double intervaloDeDibujo = 1000000000 / (Constantes.FPS - 50); //frames por seundo
         double nextDrawTime = System.nanoTime() + intervaloDeDibujo; //intervalo de sistema en nanosegundos
         try {
             double tiempoRestante = (nextDrawTime - System.nanoTime()) / 1000000;

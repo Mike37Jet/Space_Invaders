@@ -9,7 +9,6 @@ import presentacion.DetectorTeclas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 
 public class NaveEspacial extends Entidad {
     private transient DetectorTeclas detectorTeclas;
@@ -30,16 +29,14 @@ public class NaveEspacial extends Entidad {
     }
 
     public void mover() {
-        System.out.println("Moviendo");
-        System.out.println("Tecla: " + detectorTeclas.tecla);
         if (detectorTeclas.tecla == Tecla.DERECHA) {
-            System.out.println("Moviendo a la derecha");
-            this.xPos += Constantes.espacioDesplazamientoXNaveEspacial;
-
+            if (sePuedeDesplazarNave()) {
+                this.xPos += Constantes.espacioDesplazamientoXNaveEspacial;
+            }
         } else if (detectorTeclas.tecla == Tecla.IZQUIERDA) {
-            System.out.println("Moviendo a la izquierda");
-            this.xPos -= Constantes.espacioDesplazamientoXNaveEspacial;
-
+            if (sePuedeDesplazarNave()) {
+                this.xPos -= Constantes.espacioDesplazamientoXNaveEspacial;
+            }
         } else if (detectorTeclas.tecla == Tecla.DISPARAR) {
             if (puedeDisparar) {
                 Audio.playSound("/Sonidos/sonidoProyectil.wav");
@@ -64,17 +61,16 @@ public class NaveEspacial extends Entidad {
     }
 
     /**** Metodos ****/
-    public void desplazarNave() {
-        // Devuelve la nueva posici�n de la nave despu�s de un posible movimiento
-        if (this.cambioX < 0) {  // Si el cambio en la posici�n X es negativo (movi�ndose a la izquierda)
-            if (this.xPos > Constantes.limiteIzquierdoNave) {  // Si la posici�n actual de la nave est� dentro del l�mite izquierdo
-                this.xPos = this.xPos + this.cambioX;  // Actualiza la posici�n X de la nave movi�ndola a la izquierda
-            }
-        } else if (cambioX > 0) {  // Si el cambio en la posici�n X es positivo (movi�ndose a la derecha)
-            if (this.xPos + this.cambioX < Constantes.limiteDerechoNave) {  // Si la nueva posici�n no supera el l�mite derecho
-                this.xPos = this.xPos + this.cambioX;  // Actualiza la posici�n X de la nave movi�ndola a la derecha
-            }
+    public boolean sePuedeDesplazarNave() {
+        if (this.xPos < Constantes.limiteIzquierdoNave) {
+            this.xPos = Constantes.limiteIzquierdoNave + 1;
+            return false;
         }
+        if (this.xPos > Constantes.limiteDerechoNave) {
+            this.xPos = Constantes.limiteDerechoNave - 1;
+            return false;
+        }
+        return true;
     }
 
     //todo: revisar ya que la nave esta siendo dibujada y destruida al mismo tiempo

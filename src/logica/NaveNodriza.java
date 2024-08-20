@@ -12,7 +12,7 @@ public class NaveNodriza extends Entidad {
 
     public Audio musicaNaveNodriza = new Audio("/Sonidos/sonidoNaveNodriza.wav");
     public Audio musicaNaveNodrizaDestruida = new Audio("/Sonidos/sonidoNaveNodrizaDestruida.wav");
-
+    public static int contadorDeIteraciones = 0;
     private int contador = 0;
 
 
@@ -31,56 +31,71 @@ public class NaveNodriza extends Entidad {
     /**** Metododos ****/
 
     public int desplazarNave() {
-        // Calcula la nueva posición de la nave nodriza después del posible movimiento
+        // Calcula la nueva posiciï¿½n de la nave nodriza despuï¿½s del posible movimiento
         if (this.estaVivo && contadorDeIteraciones % 2 == 0) {
-            // Verifica si la nave nodriza está viva y si el contador de iteraciones es par
+            // Verifica si la nave nodriza estï¿½ viva y si el contador de iteraciones es par
             if (this.xPos > 0) {
-                // Si la nave nodriza no está en el borde izquierdo, se mueve a la izquierda
+                // Si la nave nodriza no estï¿½ en el borde izquierdo, se mueve a la izquierda
                 this.xPos = this.xPos - this.cambioX;
             } else {
-                // Si la nave nodriza llega al borde izquierdo, se reinicia a su posición inicial
+                // Si la nave nodriza llega al borde izquierdo, se reinicia a su posiciï¿½n inicial
                 this.xPos = Constantes.posXInicialNaveNodriza;
             }
         }
 
-        return this.xPos; // Devuelve la nueva posición horizontal de la nave nodriza
+        return this.xPos; // Devuelve la nueva posiciï¿½n horizontal de la nave nodriza
     }
 
 
 
     public void quitarNave() {
         if (contador < 300) {
-            // Si el contador de destrucción es menor a 300, cambia la imagen para mostrar la destrucción
-
+            // Si el contador de destrucciï¿½n es menor a 300, cambia la imagen para mostrar la destrucciï¿½n
+            this.xPos = Constantes.posXInicialNaveNodriza;
             contador++;
         } else {
-            // Cuando el contador llega a 300, reinicia la posición de la nave nodriza
+            // Cuando el contador llega a 300, reinicia la posiciï¿½n de la nave nodriza
             this.xPos = Constantes.posXInicialNaveNodriza;
         }
     }
 
     @Override
     public void run() {
-        // Método run que se ejecuta al iniciar el hilo de la nave nodriza
+        // MÃ©todo run que se ejecuta al iniciar el hilo de la nave nodriza
         while (true) {
             // Bucle infinito para mantener la nave nodriza en movimiento
             try {
-                Thread.sleep(100);
-                // Pausa el hilo por 100 milisegundos
+                Thread.sleep(100); // Pausa el hilo por 100 milisegundos
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.desplazarNave();
+
+            contadorDeIteraciones++;
+            actualizar();
+
+            // Verifica si se ha alcanzado el nÃºmero de iteraciones para pausar la apariciÃ³n
+            if (contadorDeIteraciones % 25 == 0) {
+                // AquÃ­ la nave deberÃ­a "desaparecer" o detener su movimiento por un tiempo
+                System.out.println("Nave nodriza desaparece temporalmente...");
+
+                try {
+                    Thread.sleep(10000); // Pausa el hilo por 5 segundos (ajusta este tiempo segÃºn necesites)
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("Nave nodriza reaparece!");
+            }
         }
     }
 
     @Override
     public void actualizar() {
         if (this.estaVivo == false) {
-            // Si la nave nodriza no está viva, se maneja su destrucción
+            // Si la nave nodriza no estï¿½ viva, se maneja su destrucciï¿½n
             this.quitarNave();
         }
-        // Método para actualizar la posición de la nave nodriza
+        // Mï¿½todo para actualizar la posiciï¿½n de la nave nodriza
         this.desplazarNave();
     }
 }

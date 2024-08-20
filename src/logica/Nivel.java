@@ -20,9 +20,10 @@ public class Nivel implements Serializable {
         for (int columna = 0; columna < 4; columna++) {
             this.arregloEscudos[columna] = new Escudo(Constantes.margenVentana + Constantes.posicionXPrimerEscudo + columna * (Constantes.anchoEscudo + Constantes.espacioDeSeparacionEntreEscudos));
         }
-        proyectil = new Proyectil();
-        naveEspacial = new NaveEspacial(proyectil);
+        System.out.println("Se inicializó nave nodriza");
         naveNodriza = new NaveNodriza();
+        proyectil = new Proyectil(arregloEscudos, naveNodriza);
+        naveEspacial = new NaveEspacial(proyectil);
         proyectilAlien = new ProyectilAlien(this.colmenaDeAliens, arregloEscudos, naveEspacial);
     }
 
