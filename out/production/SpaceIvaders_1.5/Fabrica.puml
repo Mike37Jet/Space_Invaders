@@ -1,0 +1,48 @@
+@startuml
+interface Vehiculo{
+
+    +Vehiculo()
+    +comportamiento()
+}
+class Carro implements Vehiculo{
+
+    +Carrro()
+    +comportamiento()
+}
+class Barco implements Vehiculo{
+
+    +Barco()
+    +comportamiento()
+}
+class Avion implements Vehiculo{
+
+    +Avion()
+    +comportamiento()
+}
+abstract class Transporte{
+
+    +Transporte()
+    +metodoFabrica()
+}
+class TransporteTerrestre extends Transporte{
+
+    +TransporteTerrestre()
+    +metodoFabrica()
+}
+class TransporteMaritimo extends Transporte{
+
+    +TransporteMaritimo()
+    +metodoFabrica()
+}
+class TransporteAereo extends Transporte{
+
+    +TransporteAereo()
+    +metodoFabrica()
+}
+
+Vehiculo <. Transporte
+
+
+
+
+@enduml
