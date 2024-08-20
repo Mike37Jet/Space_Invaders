@@ -16,7 +16,7 @@ public class Escudo extends Entidad {
     //Constructor
 
     public Escudo(int xPos) {
-        super(Constantes.anchoEscudo, Constantes.altoEscudo, xPos,Constantes.posicionYEscudo,0,0);
+        super(Constantes.anchoEscudo, Constantes.altoEscudo, xPos, Constantes.posicionYEscudo, 0, 0);
         this.crearEscudo();
     }
 
@@ -78,8 +78,6 @@ public class Escudo extends Entidad {
     }
 
 
-
-
     public int determinarColumnaDondeImpactoMisilEnElEscudo(int posicionXProyectil) {
         // Encuentra la columna del escudo en el array asociada al punto donde el misil ha tocado el escudo
 
@@ -104,6 +102,7 @@ public class Escudo extends Entidad {
         int fila = numeroDeFilasEnEscudo - 1;
 
         // Mientras haya filas por revisar y el bloque en la posición actual sea falso (es decir, no está presente)
+
         while (fila >= 0 && matrizEscudo[fila][columna] == false) {
             // Baja una fila (mueve hacia arriba)
             fila--;
@@ -176,9 +175,11 @@ public class Escudo extends Entidad {
     public int getNumeroDeFilasEnEscudo() {
         return numeroDeFilasEnEscudo;
     }
+
     public int getNumeroDeColumnasEnEscudo() {
         return numeroDeColumnasEnEscudo;
     }
+
     public boolean[][] getMatrizEscudo() {
         return matrizEscudo;
     }
