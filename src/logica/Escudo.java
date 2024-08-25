@@ -81,15 +81,19 @@ public class Escudo extends Entidad {
     public int determinarColumnaDondeImpactoMisilEnElEscudo(int posicionXProyectil) {
         // Encuentra la columna del escudo en el array asociada al punto donde el misil ha tocado el escudo
 
-        int columna = -1; // Inicializa la variable columna con -1 (valor por defecto que indica que la columna aún no ha sido encontrada)
+        int columna = (posicionXProyectil - this.xPos) / Constantes.dimensionesDeBloqueDeEscudo;
 
         // Calcula la columna en la que el misil ha tocado el escudo:
         // Restamos la posición X del escudo de la posición X del misil
         // Luego dividimos el resultado por el tamaño de cada bloque del escudo
         // Esto nos da la columna del bloque dentro del escudo
-        columna = (posicionXProyectil - this.xPos) / Constantes.dimensionesDeBloqueDeEscudo;
+        // Asegúrate de que la columna esté dentro del rango válido
+        if (columna < 0) {
+            columna = 0; // Ajusta a la primera columna si está por debajo del rango
+        } else if (columna >= numeroDeColumnasEnEscudo) {
+            columna = numeroDeColumnasEnEscudo - 1; // Ajusta a la última columna si está por encima del rango
+        }
 
-        // Devuelve la columna encontrada
         return columna;
     }
 
@@ -103,9 +107,10 @@ public class Escudo extends Entidad {
 
         // Mientras haya filas por revisar y el bloque en la posición actual sea falso (es decir, no está presente)
 
-        while (fila >= 0 && matrizEscudo[fila][columna] == false) {
+        while (fila >= 0 && columna >= 0 && matrizEscudo[fila][columna] == false) {
             // Baja una fila (mueve hacia arriba)
             fila--;
+
         }
 
         // Devuelve la fila donde se encontró el bloque o -1 si no se encontró ningún bloque en esa columna
@@ -117,7 +122,7 @@ public class Escudo extends Entidad {
         // Elimina hasta 6 bloques en la columna especificada, comenzando desde la fila dada y moviéndose hacia abajo,
         // siempre que existan bloques para eliminar.
         for (int contador = 0; contador < 6; contador++) {
-            if (fila - contador >= 0) { // Verifica si la fila actual está dentro de los límites del escudo
+            if (fila - contador >= 0 && columna != -1) { // Verifica si la fila actual está dentro de los límites del escudo
                 matrizEscudo[fila - contador][columna] = false; // Elimina el bloque en la posición (fila - contador, columna)
                 // También elimina el bloque en la columna adyacente a la derecha si está dentro de los límites
                 if (columna < numeroDeColumnasEnEscudo - 1) {
@@ -128,11 +133,11 @@ public class Escudo extends Entidad {
     }
 
 
-    public void romperBloques(int posicionXProyectil) {
+    public void romperBloques(int posicionXProyectil, int filaDondeSeEncuentraElBloque) {
         // Récapitule les 3 méthodes qui précédent
         Audio.playSound("/Sonidos/sonidoImactoDisparoContraEscudo.wav");
         int columna = this.determinarColumnaDondeImpactoMisilEnElEscudo(posicionXProyectil);
-        this.eliminarBloques(encontrarFilaDondeSeEncuentraElBloque(columna), columna);
+        this.eliminarBloques(filaDondeSeEncuentraElBloque, columna);
     }
 
     public int encontrarBloqueSuperior(int columna) {

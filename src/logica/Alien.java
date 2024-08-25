@@ -20,6 +20,6 @@ public class Alien extends Entidad {
     }
 
     public boolean getHilo() {
-        return this.hilo;
+        return this.estaHiloActivo;
     }
 }

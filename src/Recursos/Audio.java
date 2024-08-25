@@ -41,4 +41,7 @@ public class Audio {
 		Audio s = new Audio(sonido); // Crea una instancia de Audio con el sonido dado
 		s.play(); // Reproduce el sonido
 	}
+
+    public void loop() {
+    }
 }

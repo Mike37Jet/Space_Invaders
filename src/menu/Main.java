@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         SpaceInvaders spaceInvaders = new SpaceInvaders(new Nivel());
 
-        Menu menu = new Menu(spaceInvaders);
+        Menu menu = new Menu(spaceInvaders); 
 
     }
 }

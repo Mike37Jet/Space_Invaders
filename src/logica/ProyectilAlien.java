@@ -8,18 +8,18 @@ import Recursos.Constantes;
 public class ProyectilAlien extends Entidad {
 
 
-    private ColmenaDeAliens matrizPosicionALien;
+    private ColmenaDeAliens colmenaDeAliens;
     private Escudo[] arregloEscudos;
     private NaveEspacial naveEspacial;
+    private int contadorDisparosAlien = 0;
     /**** Variables ****/
 
 
     /**** CONSTRUCTEUR ****/
 
     public ProyectilAlien(ColmenaDeAliens matrizPosicionALien, Escudo[] arregloEscudos, NaveEspacial naveEspacial) {
-        super(Constantes.anchoDisparoAlien, Constantes.altoDisparoAlien, matrizPosicionALien.elegirAlienParaDisparar()[0] + Constantes.anchoAlien / 2 - 1, matrizPosicionALien.elegirAlienParaDisparar()[1] + Constantes.alturaAlien, 0, Constantes.espacioDeDesplazamientoEnYDisparoAlien);
-        this.matrizPosicionALien = matrizPosicionALien;
-
+        super(Constantes.anchoDisparoAlien, Constantes.altoDisparoAlien, matrizPosicionALien.elegirPosicionDeAlienParaDisparar()[0] + Constantes.anchoAlien / 2 - 1, matrizPosicionALien.elegirPosicionDeAlienParaDisparar()[1] + Constantes.alturaAlien, 0, Constantes.espacioDeDesplazamientoEnYDisparoAlien);
+        this.colmenaDeAliens = matrizPosicionALien;
         this.arregloEscudos = arregloEscudos;
         this.naveEspacial = naveEspacial;
 
@@ -43,11 +43,12 @@ public class ProyectilAlien extends Entidad {
     /**** METHODES ****/
 
     public void desplazarDisparoAlien() {
+
         // Verifica si el contador de iteraciones es m�ltiplo de 4
         if (contadorDeIteraciones % 4 == 0) {
             // Si la posici�n y del disparo es menor que 600(Tama�o de la pantalla), desplaza el disparo hacia abajo
-            if (this.yPos < 600) {
-                this.yPos = this.yPos + Constantes.espacioDeDesplazamientoEnYDisparoAlien;
+            if (this.yPos < Constantes.alturaVentana) {
+                this.yPos += Constantes.espacioDeDesplazamientoEnYDisparoAlien;
             }
         }
     }
@@ -128,8 +129,7 @@ public class ProyectilAlien extends Entidad {
     }
 
 
-    public void
-    detectarImpactoConEscudo(Escudo[] arregloEscudos) {
+    public void detectarImpactoConEscudo(Escudo[] arregloEscudos) {
         // Obtiene el impacto del disparo con el escudo, devolviendo el n�mero del escudo y la posici�n en x del impacto.
         int[] resultado = this.obtenerImpactoConEscudo(); // Contiene (-1, -1) o el n�mero del escudo tocado y la posici�n en x del disparo
 
@@ -187,10 +187,12 @@ public class ProyectilAlien extends Entidad {
 
         }
 
-        // Si el disparo del alien ha llegado al final de la pantalla, detiene el hilo
-        if (this.yPos > 600) {
-            this.yPos = matrizPosicionALien.elegirAlienParaDisparar()[1] + Constantes.alturaAlien;
-            this.xPos = matrizPosicionALien.elegirAlienParaDisparar()[0] + Constantes.anchoAlien / 2 - 1;
+        if (this.yPos >= Constantes.alturaVentana) {
+            if(colmenaDeAliens.elegirPosicionDeAlienParaDisparar()[1] + Constantes.alturaAlien != -1){
+                this.yPos = colmenaDeAliens.elegirPosicionDeAlienParaDisparar()[1] + Constantes.alturaAlien;
+                this.xPos = colmenaDeAliens.elegirPosicionDeAlienParaDisparar()[0] + Constantes.anchoAlien / 2 - 1;
+            }
+
         }
 
 

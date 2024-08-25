@@ -20,7 +20,7 @@ public class Nivel implements Serializable {
         for (int columna = 0; columna < 4; columna++) {
             this.arregloEscudos[columna] = new Escudo(Constantes.margenVentana + Constantes.posicionXPrimerEscudo + columna * (Constantes.anchoEscudo + Constantes.espacioDeSeparacionEntreEscudos));
         }
-        System.out.println("Se inicializó nave nodriza");
+        System.out.println("Se inicializo nave nodriza");
         naveNodriza = new NaveNodriza();
         proyectil = new Proyectil(arregloEscudos, naveNodriza);
         naveEspacial = new NaveEspacial(proyectil);
@@ -29,15 +29,15 @@ public class Nivel implements Serializable {
 
     public void iniciarNivel(DetectorTeclas controles) {
 
-        naveEspacial.hilo = true;
-        naveNodriza.hilo = true;
-        proyectil.hilo = true;
-        proyectilAlien.hilo = true;
+        naveEspacial.estaHiloActivo = true;
+        naveNodriza.estaHiloActivo = true;
+        proyectil.estaHiloActivo = true;
+        proyectilAlien.estaHiloActivo = true;
 
 
         hiloLogicoNaveEspacial = new Thread(naveEspacial);
         hiloLogicoColmenaAlien = new Thread(colmenaDeAliens);
-        hiloLogicoProyectil = new Thread( proyectil);
+        hiloLogicoProyectil = new Thread(proyectil);
         hiloLogicoEscudo = new Thread(arregloEscudos[0]);
         hiloLogicoNaveNodriza = new Thread(naveNodriza);
         hiloLogicoProyectilAlien = new Thread(proyectilAlien);
@@ -69,11 +69,11 @@ public class Nivel implements Serializable {
     }
 
     public void terminar() {
-        naveEspacial.hilo = false;
-        alien.hilo = false;
-        naveNodriza.hilo = false;
-        proyectil.hilo = false;
-        proyectilAlien.hilo = false;
+        naveEspacial.estaHiloActivo = false;
+        alien.estaHiloActivo = false;
+        naveNodriza.estaHiloActivo = false;
+        proyectil.estaHiloActivo = false;
+        proyectilAlien.estaHiloActivo = false;
 
     }
 

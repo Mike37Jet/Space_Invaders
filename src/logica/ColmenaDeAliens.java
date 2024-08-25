@@ -17,7 +17,7 @@ public class ColmenaDeAliens implements Runnable {
     private int velocidad;
     private boolean colmenaViva = true;
     private Nivel nivel;
-    private int[] matrizAliensMuertos = {-1, -1}; // Emplacement alien mort dans tableau aliens
+    private int[] posicionAlienMuerto = {-1, -1}; // Emplacement alien mort dans tableau aliens
 
     Random random = new Random();
 
@@ -155,9 +155,9 @@ public class ColmenaDeAliens implements Runnable {
         // M�todo que gestiona el movimiento de los aliens
         // Primero, verifica si hay un alien muerto que debe eliminarse
 
-        if (this.matrizAliensMuertos[0] != -1) {
-            eliminarAlienMuerto(matrizAliensMuertos); // Llama al m�todo para eliminar el alien
-            matrizAliensMuertos[0] = -1; // Reinicia la posici�n del alien muerto en el arreglo
+        if (this.posicionAlienMuerto[0] != -1) {
+            eliminarAlienMuerto(posicionAlienMuerto); // Llama al m�todo para eliminar el alien
+            posicionAlienMuerto[0] = -1; // Reinicia la posici�n del alien muerto en el arreglo
         }
 
         // Determina la direcci�n del movimiento de los aliens
@@ -216,10 +216,10 @@ public class ColmenaDeAliens implements Runnable {
                         // Marca al alien como destruido
                         this.colmenaDeAliens[fila][columna].estaVivo = false;
                         // Mueve el proyectil fuera de la pantalla (lo destruye)
-                        proyectil.yPos = -15;
+                        proyectil.yPos = -Constantes.altoProyectil;
                         // Registra la posici�n del alien muerto en el arreglo
-                        this.matrizAliensMuertos[0] = fila;
-                        this.matrizAliensMuertos[1] = columna;
+                        this.posicionAlienMuerto[0] = fila;
+                        this.posicionAlienMuerto[1] = columna;
 
                         // Sale del bucle una vez que se ha destruido un alien
                         break;
@@ -234,22 +234,22 @@ public class ColmenaDeAliens implements Runnable {
         this.colmenaDeAliens[matrizAliensMuertos[0]][matrizAliensMuertos[1]] = null;
         // Disminuye el n�mero total de aliens en la colmena
         this.numeroTotalAliens--;
-        if(this.numeroTotalAliens == 0){
+        if (this.numeroTotalAliens == 0) {
             colmenaViva = false;
         }
     }
 
 
-    public int[] elegirAlienParaDisparar() {
+    public int[] elegirPosicionDeAlienParaDisparar() {
         // Devuelve la posici�n de un alien elegido al azar en tabAlien en la parte inferior de su columna (l�nea, columna)
-        int[] posicionAlienQueVaADisparar = {-1, -1}; // Inicializa un array para almacenar la posici�n del alien (x, y)
+        int[] posicionAlienQueVaADisparar = new int[2]; // Inicializa un array para almacenar la posici�n del alien (x, y)
 
         // Verifica si a�n quedan aliens vivos
         if (this.numeroTotalAliens != 0) {
             do {
                 //todo: en esta parte usa una columna base 10 si se hace un una colmena de un numero distino de aliens toca modificar esto
                 // Selecciona aleatoriamente una columna del array de aliens
-                int columna = random.nextInt(10);
+                int columna = random.nextInt(colmenaDeAliens[0].length);
                 // Busca el primer alien vivo comenzando desde la parte inferior
                 for (int fila = 4; fila >= 0; fila--) {
                     // Si encuentra un alien en la posici�n actual de la columna y fila
@@ -259,6 +259,8 @@ public class ColmenaDeAliens implements Runnable {
                         // Guarda la posici�n y del alien
                         posicionAlienQueVaADisparar[1] = this.colmenaDeAliens[fila][columna].getyPos();
                         break; // Termina la b�squeda en la columna actual
+                    }else {
+                        posicionAlienQueVaADisparar[0] = -1; // Si no se encuentra un alien v�lido, establece la posici�n x en -1
                     }
                 }
             } while (posicionAlienQueVaADisparar[0] == -1); // Repite hasta encontrar un alien v�lido
