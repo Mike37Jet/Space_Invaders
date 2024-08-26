@@ -24,7 +24,6 @@ public class DetectorTeclas implements KeyListener {
         } else if (code == Tecla.PAUSAR.getCodigo()) {
             tecla = Tecla.PAUSAR;
         }
-
     }
 
     @Override
@@ -39,6 +38,7 @@ public class DetectorTeclas implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        // Restablecer la tecla cuando se suelta
+        tecla = null;
     }
-
 }

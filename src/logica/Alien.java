@@ -7,7 +7,8 @@ public class Alien extends Entidad {
     /**** Constructor ****/
 
     public Alien(int xPos, int yPos) {
-        super(Constantes.anchoAlien, Constantes.alturaAlien, xPos,yPos,0,0);
+        super(Constantes.anchoAlien, Constantes.alturaAlien, xPos, yPos, 0, 0);
+        this.vivo = true;
     }
 
 
@@ -20,6 +21,10 @@ public class Alien extends Entidad {
     }
 
     public boolean getHilo() {
-        return this.estaHiloActivo;
+        return this.hiloActivo;
+    }
+
+    public boolean estaVivo() {
+        return this.vivo;
     }
 }

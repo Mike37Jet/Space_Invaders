@@ -8,7 +8,7 @@ public class InterfazGraficaDeNaveNodriza extends InterfazGrafica {
     public InterfazGraficaDeNaveNodriza() {
         super();
         sprites = new BufferedImage[2];
-        spriteEnUso = sprites;
+        //spriteEnUso = sprites;
         obtenerImagen("naveNodriza", sprites);
     }
 

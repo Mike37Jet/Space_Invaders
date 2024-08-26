@@ -1,7 +1,5 @@
 package logica;
 
-import javax.swing.ImageIcon;
-
 import Recursos.Audio;
 import Recursos.Constantes;
 
@@ -18,17 +16,14 @@ public class NaveNodriza extends Entidad {
 
     public NaveNodriza() {
         super(Constantes.anchoNaveNodriza, Constantes.altoNaveNodriza, Constantes.posXInicialNaveNodriza, Constantes.posYNaveNodriza, Constantes.espacioDeDesplazamientoEnYNaveNodriza, 0);
-
-        super.estaVivo = true;
-
-
+        super.vivo = true;
         this.contador = 0;
     }
 
     /**** Métodos ****/
 
     public int desplazarNave() {
-        if (this.estaVivo && contadorDeIteraciones % 2 == 0) {
+        if (this.vivo && contadorDeIteraciones % 2 == 0) {
             if (this.xPos > 0) {
                 this.xPos -= this.cambioX;
             } else {
@@ -51,37 +46,28 @@ public class NaveNodriza extends Entidad {
 
 
 
-    @Override
-    public void run() {
-        while (true) {
-            if (enPausa) {
-
-                try {
-                    Thread.sleep((long) (10000 * 2.5));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                enPausa = false;
-
-            }
-
-            actualizar();
-
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 
     @Override
     public void actualizar() {
-        if (!this.estaVivo) {
+        if (enPausa) {
+            try {
+                Thread.sleep((long) (10000 * 2.5));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            enPausa = false;
+
+        }
+        if (!this.vivo) {
             this.quitarNave();
         }
         musicaNaveNodriza.play();
         this.desplazarNave();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
 }

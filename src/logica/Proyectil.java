@@ -156,9 +156,9 @@ public class Proyectil extends Entidad {
 
             this.estaDisparando = false; // Marca el disparo como inactivo (se ha destruido)
             this.yPos = -Constantes.altoProyectil; // Mueve el disparo fuera de la pantalla
-            naveNodriza.estaVivo = false; // Retorna verdadero para indicar que el disparo ha impactado en la nave nodriza
+            naveNodriza.vivo = false; // Retorna verdadero para indicar que el disparo ha impactado en la nave nodriza
         } else {
-            naveNodriza.estaVivo = true; // Retorna falso para indicar que no ha habido impacto
+            naveNodriza.vivo = true; // Retorna falso para indicar que no ha habido impacto
         }
     }
 

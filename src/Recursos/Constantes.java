@@ -18,7 +18,7 @@ public abstract class Constantes {
 	public final static int yPosicionInicialNave = 490;
 	
 	// Numero de bloques por desplazamiento
-	public final static int espacioDesplazamientoXNaveEspacial = 1;
+	public final static int espacioDesplazamientoXNaveEspacial = 2;
 	
 	// Limite de desplazamiento
 	public final static int limiteIzquierdoNave = 60;

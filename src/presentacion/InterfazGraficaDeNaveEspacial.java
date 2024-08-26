@@ -1,8 +1,6 @@
 package presentacion;
 
 import Recursos.Constantes;
-import logica.Entidad;
-import logica.NaveEspacial;
 import logica.Nivel;
 
 import java.awt.image.BufferedImage;
@@ -10,7 +8,8 @@ import java.awt.image.BufferedImage;
 public class InterfazGraficaDeNaveEspacial extends InterfazGrafica{
     private final ContenedorSpaceInvaders contenedorSpaceInvaders;
     protected BufferedImage[] spritesDestruida;
-    protected NaveEspacial naveEspacial;
+    private boolean hiloGrafico = true;
+
     public InterfazGraficaDeNaveEspacial(ContenedorSpaceInvaders contenedorSpaceInvaders) {
         super();
         this.contenedorSpaceInvaders = contenedorSpaceInvaders;
@@ -21,16 +20,27 @@ public class InterfazGraficaDeNaveEspacial extends InterfazGrafica{
     }
 
     @Override
+    public void actualizar() {
+        if (entidad.estaLaNaveEspacialDestruida()) {
+            this.sprites = spritesDestruida;
+        }
+    }
+
+    @Override
     public void setNivel(Nivel nivel) {
-        spriteEnUso = sprites;
+        //spriteEnUso = sprites;
         this.nivel = nivel;
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (hiloGrafico) {
+            if(contenedorSpaceInvaders.getNivel().getNaveEspacial().estaLaNaveEspacialDestruida()){
+                hiloGrafico = false;
+            }
             contenedorSpaceInvaders.repaint();
             verificarTiempo();
+            actualizar();
         }
     }
 
@@ -47,4 +57,6 @@ public class InterfazGraficaDeNaveEspacial extends InterfazGrafica{
             throw new RuntimeException(e);
         }
     }
+
+
 }

@@ -8,7 +8,7 @@ public class InterfazGraficaDeProyectil extends InterfazGrafica {
     public InterfazGraficaDeProyectil() {
         super();
         sprites = new BufferedImage[2];
-        spriteEnUso = sprites;
+        //spriteEnUso = sprites;
         obtenerImagen("proyectil", sprites);
     }
 

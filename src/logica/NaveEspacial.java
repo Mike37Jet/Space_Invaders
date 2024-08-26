@@ -22,6 +22,7 @@ public class NaveEspacial extends Entidad {
 
     private boolean puedeDisparar;
 
+
     public NaveEspacial(Proyectil proyectil) {
         super(Constantes.anchoNave, Constantes.altoNave, Constantes.xPosicionInicialNave, Constantes.yPosicionInicialNave, 0, 0);
         this.proyectil = proyectil;
@@ -29,6 +30,9 @@ public class NaveEspacial extends Entidad {
     }
 
     public void mover() {
+        if (pausado) {
+            return; // Si está pausado, no hacer nada
+        }
         if (detectorTeclas.tecla == Tecla.DERECHA) {
             if (sePuedeDesplazarNave()) {
                 this.xPos += Constantes.espacioDesplazamientoXNaveEspacial;
@@ -56,6 +60,9 @@ public class NaveEspacial extends Entidad {
                 timer.setRepeats(false); // El timer no se repite automáticamente
                 timer.start(); // Iniciar el timer
             }
+        } else if (detectorTeclas.tecla == Tecla.PAUSAR) {
+            detectorTeclas.tecla = null;
+            estaPausado();
         }
 
     }
@@ -74,32 +81,24 @@ public class NaveEspacial extends Entidad {
     }
 
     //todo: revisar ya que la nave esta siendo dibujada y destruida al mismo tiempo
-    //public void destruirNave() {
-    //	if(contador < 300) {
-    //		if(ManejadorDeEventosRepintar.contadorDeIteraciones % 2 == 0) {
-    //			super.imageIcon = new ImageIcon(getClass().getResource(super.strImg2)); // Cambia a la imagen de la nave destruida
-    //		} else {
-    //			super.imageIcon = new ImageIcon(getClass().getResource(super.strImg3)); // Cambia a la segunda imagen de la nave destruida
-    //		}
-    //		contador++;
-    //	} else {
-    //		Main.juego = false; // Termina el juego si la nave ha sido destruida durante 300 pasos
-    //	}
-    //	super.img = this.imageIcon.getImage(); // Actualiza la imagen de la nave
-    //}
+    public void destruirNave() {
+        this.naveEstaDestruida = true; // Cambia el estado de la nave a destruida
 
-    //public boolean estaPausado() {
-    //	if (detectorTeclas.tecla == Tecla.PAUSAR) {
-    //		detectorTeclas.tecla = null;
-    //		this.pausado = !this.pausado;
-    //		if (pausado) {
-    //			audio.stop();
-    //		} else {
-    //			audio.play();
-    //		}
-    //	}
-    //	return this.pausado;
-    //}
+    	//if(contador < 300) {
+    	//	if(contadorDeIteraciones % 2 == 0) {
+    	//		super.imageIcon = new ImageIcon(getClass().getResource(super.strImg2)); // Cambia a la imagen de la nave destruida
+    	//	} else {
+    	//		super.imageIcon = new ImageIcon(getClass().getResource(super.strImg3)); // Cambia a la segunda imagen de la nave destruida
+    	//	}
+    	//	contador++;
+    	//} else {
+    	//	juego = false; // Termina el juego si la nave ha sido destruida durante 300 pasos
+    	//}
+    	//super.img = this.imageIcon.getImage(); // Actualiza la imagen de la nave
+    }
+
+
+
     @Override
     public void detenerSonido() {
         audio.stop();
@@ -107,14 +106,14 @@ public class NaveEspacial extends Entidad {
 
     @Override
     public void actualizar() {
-
-        if (this.estaVivo == false) {
-            //this.destruirNave(); // Llama al m�todo que maneja la destrucci�n de la nave
+        if (this.naveEstaDestruida) {
+            Thread.currentThread().interrupt();
         } else {
-
             mover();
         }
     }
+
+
 
     public void setDetectorTeclas(DetectorTeclas controles) {
         this.detectorTeclas = controles;

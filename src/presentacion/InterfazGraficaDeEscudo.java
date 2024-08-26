@@ -11,7 +11,7 @@ public class InterfazGraficaDeEscudo extends InterfazGrafica {
 
     public InterfazGraficaDeEscudo() {
         super();
-        spriteEnUso = sprites;
+        //spriteEnUso = sprites;
     }
 
     @Override

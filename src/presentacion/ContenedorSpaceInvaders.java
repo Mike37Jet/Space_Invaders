@@ -96,4 +96,8 @@ public class ContenedorSpaceInvaders extends JPanel {
             interfazGraficaEscudos[columna].dibujar(g2);
         }
     }
+
+    public Nivel getNivel() {
+        return nivel;
+    }
 }

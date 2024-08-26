@@ -214,7 +214,7 @@ public class ColmenaDeAliens implements Runnable {
                     // Verifica si el proyectil ha destruido el alien en la posici�n actual
                     if (proyectil.destruirAlien(this.colmenaDeAliens[fila][columna]) == true) {
                         // Marca al alien como destruido
-                        this.colmenaDeAliens[fila][columna].estaVivo = false;
+                        this.colmenaDeAliens[fila][columna].vivo = false;
                         // Mueve el proyectil fuera de la pantalla (lo destruye)
                         proyectil.yPos = -Constantes.altoProyectil;
                         // Registra la posici�n del alien muerto en el arreglo
@@ -241,32 +241,23 @@ public class ColmenaDeAliens implements Runnable {
 
 
     public int[] elegirPosicionDeAlienParaDisparar() {
-        // Devuelve la posici�n de un alien elegido al azar en tabAlien en la parte inferior de su columna (l�nea, columna)
-        int[] posicionAlienQueVaADisparar = new int[2]; // Inicializa un array para almacenar la posici�n del alien (x, y)
+        int[] posicionAlienQueVaADisparar = new int[2];
 
-        // Verifica si a�n quedan aliens vivos
         if (this.numeroTotalAliens != 0) {
             do {
-                //todo: en esta parte usa una columna base 10 si se hace un una colmena de un numero distino de aliens toca modificar esto
-                // Selecciona aleatoriamente una columna del array de aliens
                 int columna = random.nextInt(colmenaDeAliens[0].length);
-                // Busca el primer alien vivo comenzando desde la parte inferior
                 for (int fila = 4; fila >= 0; fila--) {
-                    // Si encuentra un alien en la posici�n actual de la columna y fila
-                    if (colmenaDeAliens[fila][columna] != null) {
-                        // Guarda la posici�n x del alien
+                    if (colmenaDeAliens[fila][columna] != null && colmenaDeAliens[fila][columna].estaVivo()) {
                         posicionAlienQueVaADisparar[0] = this.colmenaDeAliens[fila][columna].getxPos();
-                        // Guarda la posici�n y del alien
                         posicionAlienQueVaADisparar[1] = this.colmenaDeAliens[fila][columna].getyPos();
-                        break; // Termina la b�squeda en la columna actual
-                    }else {
-                        posicionAlienQueVaADisparar[0] = -1; // Si no se encuentra un alien v�lido, establece la posici�n x en -1
+                        break;
+                    } else {
+                        posicionAlienQueVaADisparar[0] = -1;
                     }
                 }
-            } while (posicionAlienQueVaADisparar[0] == -1); // Repite hasta encontrar un alien v�lido
+            } while (posicionAlienQueVaADisparar[0] == -1);
         }
-
-        return posicionAlienQueVaADisparar; // Devuelve la posici�n del alien encontrado
+        return posicionAlienQueVaADisparar;
     }
 
 
@@ -324,7 +315,7 @@ public class ColmenaDeAliens implements Runnable {
 
     @Override
     public void run() {
-        while (colmenaViva) {
+        while (colmenaViva && !nivel.getNaveEspacial().estaLaNaveEspacialDestruida()) {
             proyectilImpactaAlien(nivel.getProyectil());
             desplazarAliens();
             verificarTiempo2();

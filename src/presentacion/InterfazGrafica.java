@@ -14,7 +14,7 @@ import java.util.Random;
 public abstract class InterfazGrafica implements Runnable{
 
     protected Nivel nivel;
-    protected BufferedImage[] sprites, spriteEnUso;
+    protected BufferedImage[] sprites;
     protected Entidad entidad;
     Random random = new Random();
 
@@ -50,7 +50,7 @@ public abstract class InterfazGrafica implements Runnable{
     public abstract void setNivel(Nivel nivel);
 
     public void actualizar() {
-        this.spriteEnUso = sprites;
+
     }
 
     public void setEntidad(Entidad entidad) {

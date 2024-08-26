@@ -11,7 +11,7 @@ public class InterfazGraficaDeProyectilAlien extends InterfazGrafica {
     public InterfazGraficaDeProyectilAlien() {
         super();
         sprites = new BufferedImage[2];
-        spriteEnUso = sprites;
+        //spriteEnUso = sprites;
         obtenerImagen("proyectilAlien", sprites);
 
     }

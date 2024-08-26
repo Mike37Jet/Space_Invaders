@@ -29,10 +29,10 @@ public class Nivel implements Serializable {
 
     public void iniciarNivel(DetectorTeclas controles) {
 
-        naveEspacial.estaHiloActivo = true;
-        naveNodriza.estaHiloActivo = true;
-        proyectil.estaHiloActivo = true;
-        proyectilAlien.estaHiloActivo = true;
+        naveEspacial.hiloActivo = true;
+        naveNodriza.hiloActivo = true;
+        proyectil.hiloActivo = true;
+        proyectilAlien.hiloActivo = true;
 
 
         hiloLogicoNaveEspacial = new Thread(naveEspacial);
@@ -69,11 +69,11 @@ public class Nivel implements Serializable {
     }
 
     public void terminar() {
-        naveEspacial.estaHiloActivo = false;
-        alien.estaHiloActivo = false;
-        naveNodriza.estaHiloActivo = false;
-        proyectil.estaHiloActivo = false;
-        proyectilAlien.estaHiloActivo = false;
+        naveEspacial.hiloActivo = false;
+        alien.hiloActivo = false;
+        naveNodriza.hiloActivo = false;
+        proyectil.hiloActivo = false;
+        proyectilAlien.hiloActivo = false;
 
     }
 

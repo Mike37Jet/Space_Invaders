@@ -182,13 +182,13 @@ public class ProyectilAlien extends Entidad {
 
         // Verifica si el disparo del alien ha impactado en la nave espacial
         if (this.detectarImpactoNave(naveEspacial)) {
-            // Si ha impactado, detiene el hilo
-            Thread.currentThread().interrupt();
+            naveEspacial.destruirNave();
+            //
 
         }
 
         if (this.yPos >= Constantes.alturaVentana) {
-            if(colmenaDeAliens.elegirPosicionDeAlienParaDisparar()[1] + Constantes.alturaAlien != -1){
+            if(colmenaDeAliens.elegirPosicionDeAlienParaDisparar()[0] != -1){
                 this.yPos = colmenaDeAliens.elegirPosicionDeAlienParaDisparar()[1] + Constantes.alturaAlien;
                 this.xPos = colmenaDeAliens.elegirPosicionDeAlienParaDisparar()[0] + Constantes.anchoAlien / 2 - 1;
             }

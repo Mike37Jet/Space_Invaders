@@ -8,10 +8,12 @@ public abstract class Entidad implements Runnable, Serializable {
 
 
     protected int ancho, alto, xPos, yPos, cambioX, cambioY;
-    protected boolean estaVivo = true;
+    protected boolean vivo = true;
     protected Nivel nivel;
-    public volatile boolean estaHiloActivo = true;
+    protected boolean pausado = false;
+    public volatile boolean hiloActivo = true;
     protected int contadorDeIteraciones = 0;
+    protected volatile boolean naveEstaDestruida;
 
     public Entidad(int ancho, int alto, int xPos, int yPos, int cambioX, int cambioY) {
 
@@ -52,12 +54,12 @@ public abstract class Entidad implements Runnable, Serializable {
         this.cambioX = cambioX;
     }
 
-    public boolean isEstaVivo() {
-        return estaVivo;
+    public boolean isVivo() {
+        return vivo;
     }
 
-    public void setEstaVivo(boolean estaVivo) {
-        this.estaVivo = estaVivo;
+    public void setVivo(boolean vivo) {
+        this.vivo = vivo;
     }
 
 
@@ -65,23 +67,33 @@ public abstract class Entidad implements Runnable, Serializable {
         // Metodo para detener el sonido de la entidad
     }
 
-    ;
 
     @Override
     public void run() {
-        System.out.println("Hilo de entidad");
-        while (estaHiloActivo) {
-            contadorDeIteraciones++;
-            actualizar();
-            verificarTiempo();
+        while (this.hiloActivo) {
+            if(nivel.getNaveEspacial().estaLaNaveEspacialDestruida()){
+                this.hiloActivo = false;
+            } else if (!pausado && !this.naveEstaDestruida) {
+                actualizar();
+                contadorDeIteraciones++;
+            	verificarTiempo();
+            } else {
+            	estaPausado();
+            	verificarTiempo();
+            }
+        }
+    }
 
-            //if (!pausado) {
-            //	run();
-            //	verificarTiempo();
-            //} else {
-            //	estaPausado();
-            //	verificarTiempo();
-            //}
+    public synchronized void estaPausado() {
+        pausado = !pausado;
+        if (pausado) {
+            try {
+                wait(); // Pausa el hilo
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // Restaura el estado de interrupción del hilo
+            }
+        } else {
+            notifyAll(); // Reanuda todos los hilos en espera
         }
     }
 
@@ -105,5 +117,9 @@ public abstract class Entidad implements Runnable, Serializable {
 
     public void setNivel(Nivel nivel) {
         this.nivel = nivel;
+    }
+
+    public boolean estaLaNaveEspacialDestruida() {
+        return naveEstaDestruida;
     }
 }
