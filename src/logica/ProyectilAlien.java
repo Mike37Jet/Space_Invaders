@@ -11,7 +11,6 @@ public class ProyectilAlien extends Entidad {
     private ColmenaDeAliens colmenaDeAliens;
     private Escudo[] arregloEscudos;
     private NaveEspacial naveEspacial;
-    private int contadorDisparosAlien = 0;
     /**** Variables ****/
 
 

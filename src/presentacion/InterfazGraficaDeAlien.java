@@ -10,13 +10,13 @@ import java.io.IOException;
 
 public class InterfazGraficaDeAlien extends InterfazGrafica {
     protected Alien alien;
-    protected BufferedImage[] spriteEnUso;
+    protected BufferedImage[] spritesDestruido;
 
     public InterfazGraficaDeAlien(String imagen) {
         super();
         this.sprites = new BufferedImage[8];
         obtenerImagen(imagen, sprites);
-
+        obtenerImagen("alienDestruido", spritesDestruido);
     }
 
 
@@ -26,7 +26,7 @@ public class InterfazGraficaDeAlien extends InterfazGrafica {
     }
 
     public void actualizar() {
-        this.spriteEnUso = sprites;
+        this.spritesDestruido = sprites;
     }
 
     @Override

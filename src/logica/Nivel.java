@@ -82,7 +82,7 @@ public class Nivel implements Serializable {
     }
 
     public Alien[][] getColmena() {
-        return colmenaDeAliens.getColmenaAliens();
+        return colmenaDeAliens.getMatrizAliens();
     }
 
     public ColmenaDeAliens getColmenaDeAliens() {

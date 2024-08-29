@@ -84,19 +84,18 @@ public class NaveEspacial extends Entidad {
     public void destruirNave() {
         this.naveEstaDestruida = true; // Cambia el estado de la nave a destruida
 
-    	//if(contador < 300) {
-    	//	if(contadorDeIteraciones % 2 == 0) {
-    	//		super.imageIcon = new ImageIcon(getClass().getResource(super.strImg2)); // Cambia a la imagen de la nave destruida
-    	//	} else {
-    	//		super.imageIcon = new ImageIcon(getClass().getResource(super.strImg3)); // Cambia a la segunda imagen de la nave destruida
-    	//	}
-    	//	contador++;
-    	//} else {
-    	//	juego = false; // Termina el juego si la nave ha sido destruida durante 300 pasos
-    	//}
-    	//super.img = this.imageIcon.getImage(); // Actualiza la imagen de la nave
+        //if(contador < 300) {
+        //	if(contadorDeIteraciones % 2 == 0) {
+        //		super.imageIcon = new ImageIcon(getClass().getResource(super.strImg2)); // Cambia a la imagen de la nave destruida
+        //	} else {
+        //		super.imageIcon = new ImageIcon(getClass().getResource(super.strImg3)); // Cambia a la segunda imagen de la nave destruida
+        //	}
+        //	contador++;
+        //} else {
+        //	juego = false; // Termina el juego si la nave ha sido destruida durante 300 pasos
+        //}
+        //super.img = this.imageIcon.getImage(); // Actualiza la imagen de la nave
     }
-
 
 
     @Override
@@ -112,7 +111,6 @@ public class NaveEspacial extends Entidad {
             mover();
         }
     }
-
 
 
     public void setDetectorTeclas(DetectorTeclas controles) {

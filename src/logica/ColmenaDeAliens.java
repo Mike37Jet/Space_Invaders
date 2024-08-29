@@ -11,7 +11,7 @@ public class ColmenaDeAliens implements Runnable {
 
     // Matriz que contiene la colmena de los aliens (50)
     // Todo: ahora esta usando los valores  de 5 y 10 directamente en lugar de usar una funcion que determina las dimensiones de la matriz directamente
-    private Alien colmenaDeAliens[][] = new Alien[5][10];
+    private Alien[][] matrizDeAliens = new Alien[5][10];
     private boolean estaYendoHaciaLaDerecha;
     private boolean esPrimeraImagendelAlien;
     private int velocidad;
@@ -44,28 +44,28 @@ public class ColmenaDeAliens implements Runnable {
         for (int columna = 0; columna < 10; columna++) { // Recorre cada columna de la colmena
             for (int fila = 0; fila < 1; fila++) {
                 // Crear el alien en la primera fila
-                this.colmenaDeAliens[fila][columna] = new Alien(
+                this.matrizDeAliens[fila][columna] = new Alien(
                         Constantes.posicionInicialEnXAlienigenas + (Constantes.anchoAlien + Constantes.espacioHorizontalEntreColumnasAlienigenas) * columna,
                         Constantes.alturaInicialAlienigena + Constantes.espacioVerticalEntreFilasAlienigenas * fila
                 );
             }
             for (int fila = 1; fila < 3; fila++) { // Recorre las filas 1 y 2
                 // Crear los aliens en las filas 1 y 2
-                this.colmenaDeAliens[fila][columna] = new Alien(
+                this.matrizDeAliens[fila][columna] = new Alien(
                         Constantes.posicionInicialEnXAlienigenas + (Constantes.anchoAlien + Constantes.espacioHorizontalEntreColumnasAlienigenas) * columna,
                         Constantes.alturaInicialAlienigena + Constantes.espacioVerticalEntreFilasAlienigenas * fila
                 );
             }
             for (int fila = 3; fila < 4; fila++) { // Recorre las filas 3 y 4
                 // Crear los aliens en las filas 3 y 4
-                this.colmenaDeAliens[fila][columna] = new Alien(
+                this.matrizDeAliens[fila][columna] = new Alien(
                         Constantes.posicionInicialEnXAlienigenas + (Constantes.anchoAlien + Constantes.espacioHorizontalEntreColumnasAlienigenas) * columna,
                         Constantes.alturaInicialAlienigena + Constantes.espacioVerticalEntreFilasAlienigenas * fila
                 );
             }
             for (int fila = 4; fila < 5; fila++) { // Recorre las filas 3 y 4
                 // Crear los aliens en las filas 3 y 4
-                this.colmenaDeAliens[fila][columna] = new Alien(
+                this.matrizDeAliens[fila][columna] = new Alien(
                         Constantes.posicionInicialEnXAlienigenas + (Constantes.anchoAlien + Constantes.espacioHorizontalEntreColumnasAlienigenas) * columna,
                         Constantes.alturaInicialAlienigena + Constantes.espacioVerticalEntreFilasAlienigenas * fila
                 );
@@ -79,8 +79,8 @@ public class ColmenaDeAliens implements Runnable {
         boolean respuesta = false; // Inicializa la respuesta como falsa
         for (int columna = 0; columna < 10; columna++) { // Recorre cada columna de aliens
             for (int fila = 0; fila < 5; fila++) { // Recorre cada fila de aliens
-                if (this.colmenaDeAliens[fila][columna] != null) { // Verifica si hay un alien en la posici�n actual
-                    if (this.colmenaDeAliens[fila][columna].getxPos() < Constantes.margenVentana) { // Verifica si el alien est� en el borde izquierdo
+                if (this.matrizDeAliens[fila][columna] != null) { // Verifica si hay un alien en la posici�n actual
+                    if (this.matrizDeAliens[fila][columna].getxPos() < Constantes.margenVentana) { // Verifica si el alien est� en el borde izquierdo
                         respuesta = true; // Si se encuentra un alien en el borde izquierdo, cambia la respuesta a verdadera
                         break; // Sale del bucle interior si se encuentra un alien en el borde izquierdo
                     }
@@ -96,8 +96,8 @@ public class ColmenaDeAliens implements Runnable {
         boolean respuesta = false; // Inicializa la respuesta como falsa
         for (int columna = 0; columna < 10; columna++) { // Recorre cada columna de aliens
             for (int fila = 0; fila < 5; fila++) { // Recorre cada fila de aliens
-                if (this.colmenaDeAliens[fila][columna] != null) { // Verifica si hay un alien en la posici�n actual
-                    if (this.colmenaDeAliens[fila][columna].getxPos() >
+                if (this.matrizDeAliens[fila][columna] != null) { // Verifica si hay un alien en la posici�n actual
+                    if (this.matrizDeAliens[fila][columna].getxPos() >
                             Constantes.anchoVentana - Constantes.anchoAlien - Constantes.cambioEnXDxAlien - Constantes.margenVentana) { // Verifica si el alien est� en el borde derecho
                         respuesta = true; // Si se encuentra un alien en el borde derecho, cambia la respuesta a verdadera
                         break; // Sale del bucle interior si se encuentra un alien en el borde derecho
@@ -116,9 +116,9 @@ public class ColmenaDeAliens implements Runnable {
             // Si est� tocando el borde derecho, mover todos los aliens hacia abajo
             for (int columna = 0; columna < 10; columna++) {
                 for (int fila = 0; fila < 5; fila++) {
-                    if (this.colmenaDeAliens[fila][columna] != null) {
+                    if (this.matrizDeAliens[fila][columna] != null) {
                         // Actualizar la posici�n vertical de cada alien para moverlo hacia abajo
-                        this.colmenaDeAliens[fila][columna].setyPos(this.colmenaDeAliens[fila][columna].getyPos() + Constantes.cambioEnYDyAlien);
+                        this.matrizDeAliens[fila][columna].setyPos(this.matrizDeAliens[fila][columna].getyPos() + Constantes.cambioEnYDyAlien);
                     }
                 }
             }
@@ -134,9 +134,9 @@ public class ColmenaDeAliens implements Runnable {
                 // Si est� tocando el borde izquierdo, mover todos los aliens hacia abajo
                 for (int columna = 0; columna < 10; columna++) {
                     for (int fila = 0; fila < 5; fila++) {
-                        if (this.colmenaDeAliens[fila][columna] != null) {
+                        if (this.matrizDeAliens[fila][columna] != null) {
                             // Actualizar la posici�n vertical de cada alien para moverlo hacia abajo
-                            this.colmenaDeAliens[fila][columna].setyPos(this.colmenaDeAliens[fila][columna].getyPos() + Constantes.cambioEnYDyAlien);
+                            this.matrizDeAliens[fila][columna].setyPos(this.matrizDeAliens[fila][columna].getyPos() + Constantes.cambioEnYDyAlien);
                         }
                     }
                 }
@@ -152,7 +152,7 @@ public class ColmenaDeAliens implements Runnable {
 
 
     public void desplazarAliens() {
-        // M�todo que gestiona el movimiento de los aliens
+        // Método que gestiona el movimiento de los aliens
         // Primero, verifica si hay un alien muerto que debe eliminarse
 
         if (this.posicionAlienMuerto[0] != -1) {
@@ -160,15 +160,15 @@ public class ColmenaDeAliens implements Runnable {
             posicionAlienMuerto[0] = -1; // Reinicia la posici�n del alien muerto en el arreglo
         }
 
-        // Determina la direcci�n del movimiento de los aliens
+        // Determina la dirección del movimiento de los aliens
         if (this.estaYendoHaciaLaDerecha == true) { // Movimiento hacia la derecha
             for (int columna = 0; columna < 10; columna++) {
                 for (int fila = 0; fila < 5; fila++) {
                     // Verifica si hay un alien en la posici�n actual
-                    if (this.colmenaDeAliens[fila][columna] != null) {
+                    if (this.matrizDeAliens[fila][columna] != null) {
                         // Mueve el alien hacia la derecha
-                        this.colmenaDeAliens[fila][columna].setxPos(
-                                this.colmenaDeAliens[fila][columna].getxPos() + Constantes.cambioEnXDxAlien
+                        this.matrizDeAliens[fila][columna].setxPos(
+                                this.matrizDeAliens[fila][columna].getxPos() + Constantes.cambioEnXDxAlien
                         );
                     }
                 }
@@ -177,10 +177,10 @@ public class ColmenaDeAliens implements Runnable {
             for (int columna = 0; columna < 10; columna++) {
                 for (int fila = 0; fila < 5; fila++) {
                     // Verifica si hay un alien en la posici�n actual
-                    if (this.colmenaDeAliens[fila][columna] != null) {
+                    if (this.matrizDeAliens[fila][columna] != null) {
                         // Mueve el alien hacia la izquierda
-                        this.colmenaDeAliens[fila][columna].setxPos(
-                                this.colmenaDeAliens[fila][columna].getxPos() - Constantes.cambioEnXDxAlien
+                        this.matrizDeAliens[fila][columna].setxPos(
+                                this.matrizDeAliens[fila][columna].getxPos() - Constantes.cambioEnXDxAlien
                         );
                     }
                 }
@@ -209,15 +209,15 @@ public class ColmenaDeAliens implements Runnable {
         // Recorre toda la colmena de aliens para verificar si el proyectil ha tocado alguno
         for (int columna = 0; columna < 10; columna++) {
             for (int fila = 0; fila < 5; fila++) {
-                // Verifica si hay un alien en la posici�n actual de la colmena
-                if (this.colmenaDeAliens[fila][columna] != null) {
-                    // Verifica si el proyectil ha destruido el alien en la posici�n actual
-                    if (proyectil.destruirAlien(this.colmenaDeAliens[fila][columna]) == true) {
+                // Verifica si hay un alien en la posición actual de la colmena
+                if (this.matrizDeAliens[fila][columna] != null) {
+                    // Verifica si el proyectil ha destruido el alien en la posición actual
+                    if (proyectil.destruirAlien(this.matrizDeAliens[fila][columna]) == true) {
                         // Marca al alien como destruido
-                        this.colmenaDeAliens[fila][columna].vivo = false;
+                        this.matrizDeAliens[fila][columna].vivo = false;
                         // Mueve el proyectil fuera de la pantalla (lo destruye)
                         proyectil.yPos = -Constantes.altoProyectil;
-                        // Registra la posici�n del alien muerto en el arreglo
+                        // Registra la posición del alien muerto en el arreglo
                         this.posicionAlienMuerto[0] = fila;
                         this.posicionAlienMuerto[1] = columna;
 
@@ -231,7 +231,7 @@ public class ColmenaDeAliens implements Runnable {
 
     private void eliminarAlienMuerto(int[] matrizAliensMuertos) {
         // Elimina al alien muerto de la colmena marcando su posici�n como null
-        this.colmenaDeAliens[matrizAliensMuertos[0]][matrizAliensMuertos[1]] = null;
+        this.matrizDeAliens[matrizAliensMuertos[0]][matrizAliensMuertos[1]] = null;
         // Disminuye el n�mero total de aliens en la colmena
         this.numeroTotalAliens--;
         if (this.numeroTotalAliens == 0) {
@@ -245,11 +245,11 @@ public class ColmenaDeAliens implements Runnable {
 
         if (this.numeroTotalAliens != 0) {
             do {
-                int columna = random.nextInt(colmenaDeAliens[0].length);
+                int columna = random.nextInt(matrizDeAliens[0].length);
                 for (int fila = 4; fila >= 0; fila--) {
-                    if (colmenaDeAliens[fila][columna] != null && colmenaDeAliens[fila][columna].estaVivo()) {
-                        posicionAlienQueVaADisparar[0] = this.colmenaDeAliens[fila][columna].getxPos();
-                        posicionAlienQueVaADisparar[1] = this.colmenaDeAliens[fila][columna].getyPos();
+                    if (matrizDeAliens[fila][columna] != null && matrizDeAliens[fila][columna].estaVivo()) {
+                        posicionAlienQueVaADisparar[0] = this.matrizDeAliens[fila][columna].getxPos();
+                        posicionAlienQueVaADisparar[1] = this.matrizDeAliens[fila][columna].getyPos();
                         break;
                     } else {
                         posicionAlienQueVaADisparar[0] = -1;
@@ -289,9 +289,9 @@ public class ColmenaDeAliens implements Runnable {
             // Recorre cada fila de abajo hacia arriba (de la fila 4 a la 0)
             for (int fila = 4; fila >= 0; fila--) {
                 // Verifica si hay un alien�gena en la posici�n actual
-                if (this.colmenaDeAliens[fila][columna] != null) {
+                if (this.matrizDeAliens[fila][columna] != null) {
                     // Calcula la posici�n m�s baja del alien�gena sumando su posici�n vertical y su altura
-                    posicionBaja = this.colmenaDeAliens[fila][columna].getyPos() + this.colmenaDeAliens[fila][columna].getAlto();
+                    posicionBaja = this.matrizDeAliens[fila][columna].getyPos() + this.matrizDeAliens[fila][columna].getAlto();
                     // Sale del bucle de filas ya que se ha encontrado un alien�gena en esta columna
                     break;
                 }
@@ -305,8 +305,8 @@ public class ColmenaDeAliens implements Runnable {
         return posicionBajaFinal;
     }
 
-    public Alien[][] getColmenaAliens() {
-        return colmenaDeAliens;
+    public Alien[][] getMatrizAliens() {
+        return matrizDeAliens;
     }
 
     public void setNivel(Nivel nivel) {

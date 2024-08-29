@@ -20,7 +20,7 @@ public class ContenedorSpaceInvaders extends JPanel {
     private InterfazGraficaDeEscudo[] interfazGraficaEscudos = new InterfazGraficaDeEscudo[4];
     private Nivel nivel;
     public int score = 0;
-    private final DetectorTeclas controles;
+    private DetectorTeclas controles;
     private Font fuentePuntuacion = new Font("Arial", Font.PLAIN, 20);
     private Font fuenteTexto = new Font("Arial", Font.PLAIN, 40);
 

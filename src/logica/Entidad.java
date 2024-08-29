@@ -71,9 +71,9 @@ public abstract class Entidad implements Runnable, Serializable {
     @Override
     public void run() {
         while (this.hiloActivo) {
-            if(nivel.getNaveEspacial().estaLaNaveEspacialDestruida()){
+            if(estaLaNaveEspacialDestruida() && estaEstaVivoAlien()){
                 this.hiloActivo = false;
-            } else if (!pausado && !this.naveEstaDestruida) {
+            } else if (!pausado) {
                 actualizar();
                 contadorDeIteraciones++;
             	verificarTiempo();
@@ -82,6 +82,10 @@ public abstract class Entidad implements Runnable, Serializable {
             	verificarTiempo();
             }
         }
+    }
+
+    private boolean estaEstaVivoAlien() {
+        return vivo;
     }
 
     public synchronized void estaPausado() {

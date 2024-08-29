@@ -35,7 +35,7 @@ public class InterfazGraficaDeNaveEspacial extends InterfazGrafica{
     @Override
     public void run() {
         while (hiloGrafico) {
-            if(contenedorSpaceInvaders.getNivel().getNaveEspacial().estaLaNaveEspacialDestruida()){
+            if(entidad.estaLaNaveEspacialDestruida()){
                 hiloGrafico = false;
             }
             contenedorSpaceInvaders.repaint();

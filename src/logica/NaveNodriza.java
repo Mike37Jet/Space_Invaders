@@ -9,8 +9,8 @@ public class NaveNodriza extends Entidad {
 
     public Audio musicaNaveNodriza = new Audio("/Sonidos/sonidoNaveNodriza.wav");
     public Audio musicaNaveNodrizaDestruida = new Audio("/Sonidos/sonidoNaveNodrizaDestruida.wav");
-    private int contador = 0;
-    private volatile boolean enPausa = true;  // Empieza en pausa
+    private int contador;
+    private static boolean enPausa = true;  // Empieza en pausa
 
     /**** Constructor ****/
 
@@ -64,7 +64,7 @@ public class NaveNodriza extends Entidad {
         musicaNaveNodriza.play();
         this.desplazarNave();
         try {
-            Thread.sleep(100);
+            Thread.sleep(16);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
