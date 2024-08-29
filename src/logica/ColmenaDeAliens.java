@@ -214,7 +214,7 @@ public class ColmenaDeAliens implements Runnable {
                     // Verifica si el proyectil ha destruido el alien en la posición actual
                     if (proyectil.destruirAlien(this.matrizDeAliens[fila][columna]) == true) {
                         // Marca al alien como destruido
-                        this.matrizDeAliens[fila][columna].vivo = false;
+                        this.matrizDeAliens[fila][columna].setVivo(false);
                         // Mueve el proyectil fuera de la pantalla (lo destruye)
                         proyectil.yPos = -Constantes.altoProyectil;
                         // Registra la posición del alien muerto en el arreglo

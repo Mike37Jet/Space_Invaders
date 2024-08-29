@@ -8,7 +8,7 @@ public abstract class Entidad implements Runnable, Serializable {
 
 
     protected int ancho, alto, xPos, yPos, cambioX, cambioY;
-    protected boolean vivo = true;
+    protected volatile boolean vivo = true;
     protected Nivel nivel;
     protected boolean pausado = false;
     public volatile boolean hiloActivo = true;
@@ -16,7 +16,6 @@ public abstract class Entidad implements Runnable, Serializable {
     protected volatile boolean naveEstaDestruida;
 
     public Entidad(int ancho, int alto, int xPos, int yPos, int cambioX, int cambioY) {
-
         this.ancho = ancho;
         this.alto = alto;
         this.xPos = xPos;
@@ -54,10 +53,6 @@ public abstract class Entidad implements Runnable, Serializable {
         this.cambioX = cambioX;
     }
 
-    public boolean isVivo() {
-        return vivo;
-    }
-
     public void setVivo(boolean vivo) {
         this.vivo = vivo;
     }
@@ -71,7 +66,7 @@ public abstract class Entidad implements Runnable, Serializable {
     @Override
     public void run() {
         while (this.hiloActivo) {
-            if(estaLaNaveEspacialDestruida() && estaEstaVivoAlien()){
+            if(estaLaNaveEspacialDestruida() && !estaVivoAlien()){
                 this.hiloActivo = false;
             } else if (!pausado) {
                 actualizar();
@@ -84,7 +79,7 @@ public abstract class Entidad implements Runnable, Serializable {
         }
     }
 
-    private boolean estaEstaVivoAlien() {
+    public boolean estaVivoAlien() {
         return vivo;
     }
 

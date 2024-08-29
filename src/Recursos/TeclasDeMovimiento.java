@@ -26,7 +26,7 @@ public class TeclasDeMovimiento implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (naveEspacial.isVivo()) {
+        if (naveEspacial.estaVivoAlien()) {
             if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 naveEspacial.setCambioX(Constantes.espacioDesplazamientoXNaveEspacial);
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {

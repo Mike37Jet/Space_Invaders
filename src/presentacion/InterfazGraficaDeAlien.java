@@ -14,7 +14,8 @@ public class InterfazGraficaDeAlien extends InterfazGrafica {
 
     public InterfazGraficaDeAlien(String imagen) {
         super();
-        this.sprites = new BufferedImage[8];
+        this.sprites = new BufferedImage[2];
+        this.spritesDestruido = new BufferedImage[2];
         obtenerImagen(imagen, sprites);
         obtenerImagen("alienDestruido", spritesDestruido);
     }
@@ -26,7 +27,9 @@ public class InterfazGraficaDeAlien extends InterfazGrafica {
     }
 
     public void actualizar() {
-        this.spritesDestruido = sprites;
+        if (!entidad.estaVivoAlien()) {
+            this.sprites = spritesDestruido;
+        }
     }
 
     @Override
